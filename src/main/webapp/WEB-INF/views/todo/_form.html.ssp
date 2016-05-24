@@ -1,0 +1,151 @@
+<%@val s: skinny.Skinny %>
+<%@val keyAndErrorMessages: skinny.KeyAndErrorMessages %>
+
+<%-- Be aware of package imports.
+ 1. src/main/scala/templates/ScalatePackage.scala
+ 2. scalateTemplateConfig in project/Build.scala
+--%>
+
+<div class="form-group">
+  <label class="control-label" for="title">
+    ${s.i18n.getOrKey("todo.title")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("title")) "has-error" else ""}">
+      <div class="col-xs-12">
+        <input type="text" name="title" class="form-control" value="${s.params.title}" />
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("title"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("title"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label" for="tag">
+    ${s.i18n.getOrKey("todo.tag")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("tag")) "has-error" else ""}">
+      <div class="col-xs-12">
+        <input type="text" name="tag" class="form-control" value="${s.params.tag}" />
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("tag"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("tag"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label" for="priority">
+    ${s.i18n.getOrKey("todo.priority")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("priority")) "has-error" else ""}">
+      <div class="col-xs-12">
+       <select type="select" name="priority" class="form-control" value="">
+         <option></option>
+          #for ((p1 : String, p2 : String) <- Controllers.todo.priorities)
+            #if(s.params.priority.getOrElse("") == p2)
+              <option selected="true" value="${p1}">${p2}</option>
+           #else
+             <option value="${p1}">${p2}</option>
+           #end
+         #end
+        </select>
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("priority"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("priority"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label">
+    ${s.i18n.getOrKey("todo.limitDate")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("limit_date")) "has-error" else ""}">
+      <div class="col-xs-2">
+        <input type="text" name="limit_date_year"  class="form-control" value="${s.params.limit_date_year}"  placeholder="${s.i18n.getOrKey("year")}"  maxlength=4 />
+      </div>
+      <div class="col-xs-2">
+        <input type="text" name="limit_date_month" class="form-control" value="${s.params.limit_date_month}" placeholder="${s.i18n.getOrKey("month")}" maxlength=2 />
+      </div>
+      <div class="col-xs-2">
+        <input type="text" name="limit_date_day"   class="form-control" value="${s.params.limit_date_day}"   placeholder="${s.i18n.getOrKey("day")}"   maxlength=2 />
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("limit_date"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("limit_date"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label" for="content">
+    ${s.i18n.getOrKey("todo.content")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("content")) "has-error" else ""}">
+      <div class="col-xs-12">
+        <input type="text" name="content" class="form-control" value="${s.params.content}" />
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("content"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("content"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-group">
+  <label class="control-label" for="status">
+    ${s.i18n.getOrKey("todo.status")}
+  </label>
+  <div class="controls row">
+    <div class="${if(keyAndErrorMessages.hasErrors("status")) "has-error" else ""}">
+      <div class="col-xs-12">
+        <select type="select" name="status" class="form-control" value="">
+          <option></option>
+          #for ((p1 : String, p2 : String) <- Controllers.todo.statuses)
+            #if(s.params.status.getOrElse("") == p2)
+              <option selected="true" value="${p1}">${p2}</option>
+            #else
+              <option value="${p1}">${p2}</option>
+            #end
+          #end
+        </select>
+      </div>
+    </div>
+    #if (keyAndErrorMessages.hasErrors("status"))
+      <div class="col-xs-12 has-error">
+        #for (error <- keyAndErrorMessages.getErrors("status"))
+          <label class="control-label">${error}</label>
+        #end
+      </div>
+    #end
+  </div>
+</div>
+<div class="form-actions">
+  ${unescape(s.csrfHiddenInputTag)}
+  <input type="submit" class="btn btn-primary" value="${s.i18n.getOrKey("submit")}">
+  <a class="btn btn-default" href="${s.url(Controllers.todo.indexUrl)}">${s.i18n.getOrKey("cancel")}</a>
+</div>
