@@ -1,3 +1,10 @@
+
+#todo-app
+
+skinnyでTodoアプリを作ろうとしてるやつ
+
+
+
 ## Skinny application
 
 Run Skinny app now!
@@ -71,4 +78,4 @@ sbt is the de facto standard build tool in Scala. Understanding sbt will help yo
 
 http://www.scala-sbt.org/
 
-# todo-app
+
